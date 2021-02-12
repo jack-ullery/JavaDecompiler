@@ -1,5 +1,6 @@
 package JavaClassStructs.ConstantInfoStructs;
 
+import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import misc.StreamFunctions;
@@ -12,13 +13,14 @@ import misc.StreamFunctions;
  */
 public class InvokeDynamicInfo extends ConstantInfo {
 
+    private NameAndTypeInfo child;
     private final short bootstrap_method_attr_index;
     private final short name_and_type_index;
 
     public InvokeDynamicInfo(InputStream data) throws IOException {
         super(data);
-        bootstrap_method_attr_index = StreamFunctions.readShort(data);
-        name_and_type_index = StreamFunctions.readShort(data);
+        bootstrap_method_attr_index = (short) (StreamFunctions.readShort(data) - 1);
+        name_and_type_index = (short) (StreamFunctions.readShort(data) - 1);
     }
 
     @Override
@@ -26,4 +28,9 @@ public class InvokeDynamicInfo extends ConstantInfo {
         return String.format("InvokeDynamicInfo: [%d, %d]", bootstrap_method_attr_index, name_and_type_index);
     }
 
+    @Override
+    public void findChild(ConstantPoolInfo[] arr) {
+        checkBounds(arr, name_and_type_index);
+        child = (NameAndTypeInfo) arr[name_and_type_index].info;
+    }
 }

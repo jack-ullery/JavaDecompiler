@@ -16,14 +16,13 @@ import misc.StreamFunctions;
  */
 public class ConstantPoolInfo {
 
-    private static final PrintStream debug = DebugStream.ON;
-    private static final PrintStream error = DebugStream.ERROR;
+    private static final PrintStream debug1 = DebugStream.ON;
+    private static final PrintStream debug2 = DebugStream.ON;
 
-    final byte tag;
-    final ConstantInfo info;
+    final public ConstantInfo info;
 
     public ConstantPoolInfo(InputStream data) throws IOException {
-        tag = StreamFunctions.readByte(data);
+        byte tag = StreamFunctions.readByte(data);
         info = readInfo(tag, data);
     }
 
@@ -31,11 +30,19 @@ public class ConstantPoolInfo {
         int count = Short.toUnsignedInt(ucount);
         ConstantPoolInfo[] arr = new ConstantPoolInfo[count];
         for (int i = 0; i < count; i++) {
-            debug.println("Constant #" + i);
+            debug1.println("1 - Constant #" + i);
             arr[i] = new ConstantPoolInfo(data);
-            debug.println(arr[i]);
+            debug1.println(arr[i]);
         }
-        debug.println("End of constant pool!");
+        debug1.println("End of first loop.");
+        debug2.println("Start of second loop.");
+        for (int i = 0; i < count; i++) {
+            debug2.println("2 - Constant #" + i);
+            debug2.println(arr[i].info);
+            arr[i].info.findChild(arr);
+        }
+        debug2.println("End of second loop.");
+        debug1.println("End of constant pool!");
         return arr;
     }
 
@@ -78,7 +85,7 @@ public class ConstantPoolInfo {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ConstantPoolInfo: \n");
-        sb.append("Tag: ").append(tag);
+        sb.append("Type: ").append(info.getClass().toString());
         sb.append("\nInfo: ").append(info).append('\n');
         return sb.toString();
     }

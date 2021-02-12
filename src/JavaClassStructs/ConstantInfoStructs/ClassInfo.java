@@ -1,5 +1,6 @@
 package JavaClassStructs.ConstantInfoStructs;
 
+import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import misc.StreamFunctions;
@@ -12,11 +13,12 @@ import misc.StreamFunctions;
  */
 public class ClassInfo extends ConstantInfo {
 
+    private Utf8Info child;
     private final short name_index;
 
     public ClassInfo(InputStream data) throws IOException {
         super(data);
-        name_index = StreamFunctions.readShort(data);
+        name_index = (short) (StreamFunctions.readShort(data) - 1);
     }
 
     @Override
@@ -24,5 +26,11 @@ public class ClassInfo extends ConstantInfo {
         StringBuilder sb = new StringBuilder("ClassInfo: \n");
         sb.append("Name Index: ").append(name_index).append('\n');
         return sb.toString();
+    }
+
+    @Override
+    public void findChild(ConstantPoolInfo[] arr) {
+        checkBounds(arr, name_index);
+        child = (Utf8Info) arr[name_index].info;
     }
 }

@@ -1,5 +1,6 @@
 package JavaClassStructs.ConstantInfoStructs;
 
+import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import misc.StreamFunctions;
@@ -22,5 +23,10 @@ public class FloatInfo extends ConstantInfo {
     @Override
     public String toString() {
         return String.format("FloatInfo: [%d]", bytes);
+    }
+
+    @Override
+    public void findChild(ConstantPoolInfo[] arr) {
+        // Do nothing there are no children here
     }
 }

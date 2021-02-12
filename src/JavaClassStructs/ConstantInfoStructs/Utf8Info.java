@@ -1,5 +1,6 @@
 package JavaClassStructs.ConstantInfoStructs;
 
+import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -31,7 +32,7 @@ public class Utf8Info extends ConstantInfo {
     private void assertValidBytes() {
         for (byte elem : arr) {
             if (elem == 0 || (0xf0 <= elem && elem <= 0xff)) {
-                throw new IllegalArgumentException("Byte ("+elem+"): is out of acceptable range.");
+                throw new IllegalArgumentException("Byte (" + elem + "): is out of acceptable range.");
             }
         }
     }
@@ -41,4 +42,8 @@ public class Utf8Info extends ConstantInfo {
         return String.format("Utf8Info: [%s=\"%s\"]", Arrays.toString(arr), new String(arr, StandardCharsets.UTF_8));
     }
 
+    @Override
+    public void findChild(ConstantPoolInfo[] arr) {
+        // Do nothing there are no children here
+    }
 }
