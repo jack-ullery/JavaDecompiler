@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantInfoStructs;
+package JavaClassStructs.ConstantPoolInfoStructs;
 
 import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class MethodHandleInfo extends ConstantInfo {
+public class MethodHandleInfo extends ConstantPoolInfo {
 
     private final byte reference_kind;
     private final short descriptor_index;

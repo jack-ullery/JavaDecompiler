@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantInfoStructs;
+package JavaClassStructs.ConstantPoolInfoStructs;
 
 import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class Utf8Info extends ConstantInfo {
+public class Utf8Info extends ConstantPoolInfo {
 
     private static final PrintStream debug = DebugStream.OFF;
 

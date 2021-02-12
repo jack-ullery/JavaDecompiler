@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantInfoStructs;
+package JavaClassStructs.ConstantPoolInfoStructs;
 
 import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
@@ -11,18 +11,18 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class FloatInfo extends ConstantInfo {
+public class IntegerInfo extends ConstantPoolInfo {
 
     private final int bytes;
 
-    public FloatInfo(InputStream data) throws IOException {
+    public IntegerInfo(InputStream data) throws IOException {
         super(data);
         bytes = StreamFunctions.readInt(data);
     }
 
     @Override
     public String toString() {
-        return String.format("FloatInfo: [%d]", bytes);
+        return String.format("IntegerInfo: [%d]", bytes);
     }
 
     @Override

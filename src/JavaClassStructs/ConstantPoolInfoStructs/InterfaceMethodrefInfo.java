@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantInfoStructs;
+package JavaClassStructs.ConstantPoolInfoStructs;
 
 import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class InterfaceMethodrefInfo extends ConstantInfo {
+public class InterfaceMethodrefInfo extends ConstantPoolInfo {
 
     private ClassInfo child1;
     private NameAndTypeInfo child2;
@@ -32,8 +32,8 @@ public class InterfaceMethodrefInfo extends ConstantInfo {
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
         checkBounds(arr, class_index);
-        child1 = (ClassInfo) arr[class_index].info;
+        child1 = (ClassInfo) arr[class_index];
         checkBounds(arr, name_and_type_index);
-        child2 = (NameAndTypeInfo) arr[name_and_type_index].info;
+        child2 = (NameAndTypeInfo) arr[name_and_type_index];
     }
 }

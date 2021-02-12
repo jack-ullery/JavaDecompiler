@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantInfoStructs;
+package JavaClassStructs.ConstantPoolInfoStructs;
 
 import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
@@ -11,12 +11,12 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class LongInfo extends ConstantInfo {
+public class DoubleInfo extends ConstantPoolInfo {
 
     private final int hi_bytes;
     private final int lo_bytes;
 
-    public LongInfo(InputStream data) throws IOException {
+    public DoubleInfo(InputStream data) throws IOException {
         super(data);
         hi_bytes = StreamFunctions.readInt(data);
         lo_bytes = StreamFunctions.readInt(data);
@@ -24,7 +24,7 @@ public class LongInfo extends ConstantInfo {
 
     @Override
     public String toString() {
-        return String.format("LongInfo: [%d, %d]", hi_bytes, lo_bytes);
+        return String.format("DoubleInfo: [%d, %d]", hi_bytes, lo_bytes);
     }
 
     @Override

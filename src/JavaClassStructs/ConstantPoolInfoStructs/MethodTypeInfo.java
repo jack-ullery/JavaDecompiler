@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantInfoStructs;
+package JavaClassStructs.ConstantPoolInfoStructs;
 
 import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class MethodTypeInfo extends ConstantInfo {
+public class MethodTypeInfo extends ConstantPoolInfo {
 
     private Utf8Info child;
     private final short descriptor_index;
@@ -29,6 +29,6 @@ public class MethodTypeInfo extends ConstantInfo {
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
         checkBounds(arr, descriptor_index);
-        child = (Utf8Info) arr[descriptor_index].info;
+        child = (Utf8Info) arr[descriptor_index];
     }
 }

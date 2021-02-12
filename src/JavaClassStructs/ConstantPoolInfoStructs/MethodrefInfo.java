@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantInfoStructs;
+package JavaClassStructs.ConstantPoolInfoStructs;
 
 import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
@@ -11,14 +11,14 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class FieldrefInfo extends ConstantInfo {
+public class MethodrefInfo extends ConstantPoolInfo {
 
     private ClassInfo child1;
     private NameAndTypeInfo child2;
     private final short class_index;
     private final short name_and_type_index;
 
-    public FieldrefInfo(InputStream data) throws IOException {
+    public MethodrefInfo(InputStream data) throws IOException {
         super(data);
         class_index = (short) (StreamFunctions.readShort(data) - 1);
         name_and_type_index = (short) (StreamFunctions.readShort(data) - 1);
@@ -26,14 +26,14 @@ public class FieldrefInfo extends ConstantInfo {
 
     @Override
     public String toString() {
-        return String.format("FieldrefInfo: [%d, %d]", class_index, name_and_type_index);
+        return String.format("MethodrefInfo: [%d, %d]", class_index, name_and_type_index);
     }
 
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
         checkBounds(arr, class_index);
-        child1 = (ClassInfo) arr[class_index].info;
+        child1 = (ClassInfo) arr[class_index];
         checkBounds(arr, name_and_type_index);
-        child2 = (NameAndTypeInfo) arr[name_and_type_index].info;
+        child2 = (NameAndTypeInfo) arr[name_and_type_index];
     }
 }

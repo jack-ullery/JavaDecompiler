@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantInfoStructs;
+package JavaClassStructs.ConstantPoolInfoStructs;
 
 import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class InvokeDynamicInfo extends ConstantInfo {
+public class InvokeDynamicInfo extends ConstantPoolInfo {
 
     private NameAndTypeInfo child;
     private final short bootstrap_method_attr_index;
@@ -31,6 +31,6 @@ public class InvokeDynamicInfo extends ConstantInfo {
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
         checkBounds(arr, name_and_type_index);
-        child = (NameAndTypeInfo) arr[name_and_type_index].info;
+        child = (NameAndTypeInfo) arr[name_and_type_index];
     }
 }
