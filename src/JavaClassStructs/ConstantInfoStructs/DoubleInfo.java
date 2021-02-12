@@ -1,5 +1,6 @@
 package JavaClassStructs.ConstantInfoStructs;
 
+import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import misc.StreamFunctions;
@@ -26,4 +27,8 @@ public class DoubleInfo extends ConstantInfo {
         return String.format("DoubleInfo: [%d, %d]", hi_bytes, lo_bytes);
     }
 
+    @Override
+    public void findChild(ConstantPoolInfo[] arr) {
+        // Do nothing there are no children here
+    }
 }

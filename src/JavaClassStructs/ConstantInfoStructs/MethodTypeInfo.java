@@ -1,5 +1,6 @@
 package JavaClassStructs.ConstantInfoStructs;
 
+import JavaClassStructs.ConstantPoolInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import misc.StreamFunctions;
@@ -12,15 +13,22 @@ import misc.StreamFunctions;
  */
 public class MethodTypeInfo extends ConstantInfo {
 
+    private Utf8Info child;
     private final short descriptor_index;
 
     public MethodTypeInfo(InputStream data) throws IOException {
         super(data);
-        descriptor_index = StreamFunctions.readShort(data);
+        descriptor_index = (short) (StreamFunctions.readShort(data) - 1);
     }
 
     @Override
     public String toString() {
         return String.format("MethodTypeInfo: [%d]", descriptor_index);
+    }
+
+    @Override
+    public void findChild(ConstantPoolInfo[] arr) {
+        checkBounds(arr, descriptor_index);
+        child = (Utf8Info) arr[descriptor_index].info;
     }
 }

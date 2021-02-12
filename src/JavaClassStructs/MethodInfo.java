@@ -15,7 +15,7 @@ import misc.StreamFunctions;
  */
 public class MethodInfo {
 
-    private static final PrintStream debug = DebugStream.ON;
+    private static final PrintStream debug = DebugStream.OFF;
 
     final short access_flags;
     final short name_index;

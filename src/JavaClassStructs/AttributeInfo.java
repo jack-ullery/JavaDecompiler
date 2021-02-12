@@ -15,7 +15,7 @@ import misc.StreamFunctions;
  */
 public class AttributeInfo {
 
-    private static final PrintStream debug = DebugStream.ON;
+    private static final PrintStream debug = DebugStream.OFF;
 
     final short attribute_name_index;
     final byte[] info;
