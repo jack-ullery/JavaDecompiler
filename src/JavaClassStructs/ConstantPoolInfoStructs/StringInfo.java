@@ -18,7 +18,7 @@ public class StringInfo extends ConstantPoolInfo {
 
     public StringInfo(InputStream data) throws IOException {
         super(data);
-        string_index = (short) (StreamFunctions.readShort(data) - 1);
+        string_index = (short) (StreamFunctions.readShortMinus(data));
     }
 
     @Override

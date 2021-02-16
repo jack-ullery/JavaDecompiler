@@ -18,7 +18,7 @@ public class MethodTypeInfo extends ConstantPoolInfo {
 
     public MethodTypeInfo(InputStream data) throws IOException {
         super(data);
-        descriptor_index = (short) (StreamFunctions.readShort(data) - 1);
+        descriptor_index = (short) (StreamFunctions.readShortMinus(data));
     }
 
     @Override

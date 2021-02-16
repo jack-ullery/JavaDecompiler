@@ -19,8 +19,8 @@ public class InvokeDynamicInfo extends ConstantPoolInfo {
 
     public InvokeDynamicInfo(InputStream data) throws IOException {
         super(data);
-        bootstrap_method_attr_index = (short) (StreamFunctions.readShort(data) - 1);
-        name_and_type_index = (short) (StreamFunctions.readShort(data) - 1);
+        bootstrap_method_attr_index = (short) (StreamFunctions.readShortMinus(data));
+        name_and_type_index = (short) (StreamFunctions.readShortMinus(data));
     }
 
     @Override

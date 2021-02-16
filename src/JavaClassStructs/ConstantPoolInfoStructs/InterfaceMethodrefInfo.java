@@ -20,8 +20,8 @@ public class InterfaceMethodrefInfo extends ConstantPoolInfo {
 
     public InterfaceMethodrefInfo(InputStream data) throws IOException {
         super(data);
-        class_index = (short) (StreamFunctions.readShort(data) - 1);
-        name_and_type_index = (short) (StreamFunctions.readShort(data) - 1);
+        class_index = (short) (StreamFunctions.readShortMinus(data));
+        name_and_type_index = (short) (StreamFunctions.readShortMinus(data));
     }
 
     @Override

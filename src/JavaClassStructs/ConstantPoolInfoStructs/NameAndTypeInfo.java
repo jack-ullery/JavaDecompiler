@@ -20,8 +20,8 @@ public class NameAndTypeInfo extends ConstantPoolInfo {
 
     public NameAndTypeInfo(InputStream data) throws IOException {
         super(data);
-        name_index = (short) (StreamFunctions.readShort(data) - 1);
-        descriptor_index = (short) (StreamFunctions.readShort(data) - 1);
+        name_index = (short) (StreamFunctions.readShortMinus(data));
+        descriptor_index = (short) (StreamFunctions.readShortMinus(data));
     }
 
     @Override

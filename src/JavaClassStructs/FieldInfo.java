@@ -27,11 +27,11 @@ public class FieldInfo {
     public FieldInfo(InputStream data, ConstantPoolInfo[] constant_pool) throws IOException {
         access_flags = StreamFunctions.readShort(data);
         debug2.println("Access_Flags: "+access_flags);
-        int name_index = StreamFunctions.readShort(data) - 1;
+        short name_index = StreamFunctions.readShortMinus(data);
         debug2.println("Name_Index: "+name_index);
         name = (Utf8Info) constant_pool[name_index];
         debug2.println("Name: "+name);
-        int descriptor_index = StreamFunctions.readShort(data) - 1;
+        short descriptor_index = StreamFunctions.readShortMinus(data);
         descriptor = (Utf8Info) constant_pool[descriptor_index];
         final short attributes_count = StreamFunctions.readShort(data);
         attributes = AttributeInfo.readArray(data, attributes_count, constant_pool);
@@ -53,8 +53,8 @@ public class FieldInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Access Flags: ").append(access_flags);
-        sb.append("\n\tName Index: ").append(name);
-        sb.append("\n\tDescriptor Index: ").append(descriptor);
+        sb.append("\n\tName: ").append(name);
+        sb.append("\n\tDescriptor: ").append(descriptor);
         sb.append("\n\tAttributes: ").append(Arrays.toString(attributes)).append("\n");
         return sb.toString();
     }

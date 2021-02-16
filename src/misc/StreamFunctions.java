@@ -48,4 +48,26 @@ public class StreamFunctions {
         assertLength(arr, 1);
         return arr[0];
     }
+
+    public static int readIntMinus(InputStream file) throws IOException {
+        byte[] arr = file.readNBytes(4);
+        assertLength(arr, 4);
+        int re = ((((arr[0] & 0xFF) << Byte.SIZE | (arr[1] & 0xFF)) << Byte.SIZE | (arr[2] & 0xFF)) << Byte.SIZE | (arr[3] & 0xFF)) - 1;
+        debug.println("Short: " + re);
+        return re;
+    }
+
+    public static short readShortMinus(InputStream file) throws IOException {
+        byte[] arr = file.readNBytes(2);
+        assertLength(arr, 2);
+        short re = (short) (((arr[0] & 0xFF) << Byte.SIZE | (arr[1] & 0xFF)) - 1);
+        debug.println("Short: " + re);
+        return re;
+    }
+
+    public static byte readByteMinus(InputStream file) throws IOException {
+        byte[] arr = file.readNBytes(1);
+        assertLength(arr, 1);
+        return (byte)(arr[0]-1);
+    }
 }

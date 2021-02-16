@@ -1,5 +1,6 @@
 package JavaClassStructs;
 
+import JavaClassStructs.ConstantPoolInfoStructs.Utf8Info;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -18,14 +19,16 @@ public class MethodInfo {
     private static final PrintStream debug = DebugStream.OFF;
 
     final short access_flags;
-    final short name_index;
-    final short descriptor_index;
+    final Utf8Info name;
+    final Utf8Info descriptor;
     final AttributeInfo[] attributes;
 
     public MethodInfo(InputStream data, ConstantPoolInfo[] constant_pool) throws IOException {
         access_flags = StreamFunctions.readShort(data);
-        name_index = StreamFunctions.readShort(data);
-        descriptor_index = StreamFunctions.readShort(data);
+        short name_index = StreamFunctions.readShortMinus(data);
+        name = (Utf8Info) constant_pool[name_index];
+        short descriptor_index = StreamFunctions.readShortMinus(data);
+        descriptor = (Utf8Info) constant_pool[descriptor_index];
         final short attributes_count = StreamFunctions.readShort(data);
         attributes = AttributeInfo.readArray(data, attributes_count, constant_pool);
     }
@@ -46,8 +49,8 @@ public class MethodInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Access Flags: ").append(access_flags);
-        sb.append("\n\tName Index: ").append(name_index);
-        sb.append("\n\tDescriptor Index: ").append(descriptor_index);
+//        sb.append("\n\tName Index: ").append(name_index);
+//        sb.append("\n\tDescriptor Index: ").append(descriptor_index);
         sb.append("\n\tAttribute Count: ").append(attributes.length);
         sb.append("\n\tAttributes: ").append(Arrays.toString(attributes)).append("\n");
         return sb.toString();

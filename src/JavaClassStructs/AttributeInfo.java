@@ -22,7 +22,7 @@ public class AttributeInfo {
     final byte[] info;
 
     public AttributeInfo(InputStream data, ConstantPoolInfo[] constant_pool) throws IOException {
-        int attribute_name_index = StreamFunctions.readShort(data) - 1;
+        short attribute_name_index = StreamFunctions.readShortMinus(data);
         attribute_name = (Utf8Info) constant_pool[attribute_name_index];
 
         final int attribute_length = StreamFunctions.readInt(data);

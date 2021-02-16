@@ -34,27 +34,27 @@ public class JavaDecompiler {
             throw new IllegalArgumentException("Not a valid Java class");
         }
 
-        minorNumber = readShort();
-        majorNumber = readShort();
-        short poolSize = (short) (readShort() - 1);
+        minorNumber = StreamFunctions.readShort(file);
+        majorNumber = StreamFunctions.readShort(file);
+        short poolSize = StreamFunctions.readShortMinus(file);
         debug.println("Pool Size: " + Short.toUnsignedInt(poolSize));
         pool = ConstantPoolInfo.readArray(file, poolSize);
-        accessFlags = readShort();
+        accessFlags = StreamFunctions.readShort(file);
         debug.println("Access Flags: " + accessFlags);
-        classIndex = readShort();
+        classIndex = StreamFunctions.readShort(file);
         debug.println("Class Index: " + classIndex);
-        superIndex = readShort();
+        superIndex = StreamFunctions.readShort(file);
         debug.println("Super Index: " + superIndex);
-        short interfaceCount = readShort();
+        short interfaceCount = StreamFunctions.readShort(file);
         debug.println("Interface Count: " + interfaceCount);
         interfaces = readNBytes(interfaceCount);
-        short fieldsCount = readShort();
+        short fieldsCount = StreamFunctions.readShort(file);
         debug.println("Fields Count: " + fieldsCount);
         fields = FieldInfo.readArray(file, fieldsCount, pool);
-        short methodsCount = readShort();
+        short methodsCount = StreamFunctions.readShort(file);
         debug.println("Methods Count: " + methodsCount);
         methods = MethodInfo.readArray(file, methodsCount, pool);
-        short attributesCount = readShort();
+        short attributesCount = StreamFunctions.readShort(file);
         debug.println("Attributes Count: " + methodsCount);
         attributes = AttributeInfo.readArray(file, attributesCount, pool);
     }
@@ -63,10 +63,6 @@ public class JavaDecompiler {
         byte[] magicNumber = new byte[]{-54, -2, -70, -66};
         byte[] readValue = file.readNBytes(4);
         return Arrays.equals(readValue, magicNumber);
-    }
-
-    private short readShort() throws IOException {
-        return StreamFunctions.readShort(file);
     }
 
     private byte[] readNBytes(int n) throws IOException {
