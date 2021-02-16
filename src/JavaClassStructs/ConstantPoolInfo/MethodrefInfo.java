@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantPoolInfoStructs;
+package JavaClassStructs.ConstantPoolInfo;
 
 import JavaClassStructs.ConstantPoolItem;
 import java.io.IOException;
@@ -11,14 +11,14 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class InterfaceMethodrefInfo extends ConstantPoolItem {
+public class MethodrefInfo extends ConstantPoolItem {
 
     private ClassInfo child1;
     private NameAndTypeInfo child2;
     private final short class_index;
     private final short name_and_type_index;
 
-    public InterfaceMethodrefInfo(InputStream data) throws IOException {
+    public MethodrefInfo(InputStream data) throws IOException {
         super(data);
         class_index = (short) (StreamFunctions.readShortMinus(data));
         name_and_type_index = (short) (StreamFunctions.readShortMinus(data));
@@ -26,7 +26,7 @@ public class InterfaceMethodrefInfo extends ConstantPoolItem {
 
     @Override
     public String toString() {
-        return String.format("InterfacerefInfo: [%d, %d]", class_index, name_and_type_index);
+        return String.format("MethodrefInfo: [%d, %d]", class_index, name_and_type_index);
     }
 
     @Override

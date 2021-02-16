@@ -1,4 +1,4 @@
-package JavaClassStructs.ConstantPoolInfoStructs;
+package JavaClassStructs.ConstantPoolInfo;
 
 import JavaClassStructs.ConstantPoolItem;
 import java.io.IOException;
