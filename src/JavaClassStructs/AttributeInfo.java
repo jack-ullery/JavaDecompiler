@@ -1,5 +1,6 @@
 package JavaClassStructs;
 
+import JavaClassStructs.ConstantPoolInfoStructs.Utf8Info;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -15,22 +16,26 @@ import misc.StreamFunctions;
  */
 public class AttributeInfo {
 
-    private static final PrintStream debug = DebugStream.OFF;
+    private static final PrintStream debug = DebugStream.ON;
 
-    final short attribute_name_index;
+    final Utf8Info attribute_name;
     final byte[] info;
 
-    public AttributeInfo(InputStream data) throws IOException {
-        attribute_name_index = StreamFunctions.readShort(data);
+    public AttributeInfo(InputStream data, ConstantPoolInfo[] constant_pool) throws IOException {
+        int attribute_name_index = StreamFunctions.readShort(data) - 1;
+        attribute_name = (Utf8Info) constant_pool[attribute_name_index];
+
         final int attribute_length = StreamFunctions.readInt(data);
         info = data.readNBytes(attribute_length);
     }
 
-    public static AttributeInfo[] readArray(InputStream data, final short ucount) throws IOException {
+    public static AttributeInfo[] readArray(InputStream data, final short ucount, ConstantPoolInfo[] constant_pool) throws IOException {
         int count = Short.toUnsignedInt(ucount);
         AttributeInfo[] arr = new AttributeInfo[count];
         for (int i = 0; i < count; i++) {
-            arr[i] = new AttributeInfo(data);
+            debug.println("Attribute #" + i);
+            arr[i] = new AttributeInfo(data, constant_pool);
+            debug.println(arr[i]);
         }
         return arr;
     }
@@ -38,10 +43,9 @@ public class AttributeInfo {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("AttributeInfo: \n");
-        sb.append("Attribute Index: ").append(attribute_name_index);
-        sb.append("\nLength: ").append(info.length);
-        sb.append("\nInfo: ").append(Arrays.toString(info));
-        sb.append('\n').append(Integer.toUnsignedString(attribute_name_index)).append('\n');
+        sb.append("\tAttribute Name: ").append(attribute_name);
+        sb.append("\n\tLength: ").append(info.length);
+        sb.append("\n\tInfo: ").append(Arrays.toString(info));
         return sb.toString();
     }
 }

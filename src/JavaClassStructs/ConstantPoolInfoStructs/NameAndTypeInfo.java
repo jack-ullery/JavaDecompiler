@@ -31,9 +31,9 @@ public class NameAndTypeInfo extends ConstantPoolInfo {
 
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
-        checkBounds(arr, name_index);
+        checkRecursion(arr, name_index);
         child1 = (Utf8Info) arr[name_index];
-        checkBounds(arr, descriptor_index);
+        checkRecursion(arr, descriptor_index);
         child2 = (Utf8Info) arr[descriptor_index];
     }
 }

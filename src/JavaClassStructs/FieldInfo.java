@@ -1,5 +1,6 @@
 package JavaClassStructs;
 
+import JavaClassStructs.ConstantPoolInfoStructs.Utf8Info;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -15,27 +16,35 @@ import misc.StreamFunctions;
  */
 public class FieldInfo {
 
-    private static final PrintStream debug = DebugStream.OFF;
+    private static final PrintStream debug = DebugStream.ON;
+    private static final PrintStream debug2 = DebugStream.ON;
 
     final short access_flags;
-    final short name_index;
-    final short descriptor_index;
+    final Utf8Info name;
+    final Utf8Info descriptor;
     final AttributeInfo[] attributes;
 
-    public FieldInfo(InputStream data) throws IOException {
+    public FieldInfo(InputStream data, ConstantPoolInfo[] constant_pool) throws IOException {
         access_flags = StreamFunctions.readShort(data);
-        name_index = StreamFunctions.readShort(data);
-        descriptor_index = StreamFunctions.readShort(data);
+        debug2.println("Access_Flags: "+access_flags);
+        int name_index = StreamFunctions.readShort(data) - 1;
+        debug2.println("Name_Index: "+name_index);
+        name = (Utf8Info) constant_pool[name_index];
+        debug2.println("Name: "+name);
+        int descriptor_index = StreamFunctions.readShort(data) - 1;
+        descriptor = (Utf8Info) constant_pool[descriptor_index];
         final short attributes_count = StreamFunctions.readShort(data);
-        attributes = AttributeInfo.readArray(data, attributes_count);
+        attributes = AttributeInfo.readArray(data, attributes_count, constant_pool);
     }
 
-    public static FieldInfo[] readArray(InputStream data, final short ucount) throws IOException {
+    public static FieldInfo[] readArray(InputStream data, final short ucount, ConstantPoolInfo[] constant_pool) throws IOException {
         int count = Short.toUnsignedInt(ucount);
         debug.println("Reading " + count + " FieldInfo classes.");
         FieldInfo[] arr = new FieldInfo[count];
         for (int i = 0; i < count; i++) {
-            arr[i] = new FieldInfo(data);
+            debug.println("Field #" + i);
+            arr[i] = new FieldInfo(data, constant_pool);
+            debug.println(arr[i]);
         }
         return arr;
     }
@@ -44,9 +53,9 @@ public class FieldInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Access Flags: ").append(access_flags);
-        sb.append("\nName Index: ").append(name_index);
-        sb.append("\nDescriptor Index: ").append(descriptor_index);
-        sb.append("\nAttributes: ").append(Arrays.toString(attributes)).append("\n");
+        sb.append("\n\tName Index: ").append(name);
+        sb.append("\n\tDescriptor Index: ").append(descriptor);
+        sb.append("\n\tAttributes: ").append(Arrays.toString(attributes)).append("\n");
         return sb.toString();
     }
 }

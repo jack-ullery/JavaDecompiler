@@ -28,7 +28,7 @@ public class StringInfo extends ConstantPoolInfo {
 
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
-        checkBounds(arr, string_index);
+        checkRecursion(arr, string_index);
         child = (Utf8Info) arr[string_index];
     }
 }

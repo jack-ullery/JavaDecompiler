@@ -39,7 +39,8 @@ public class Utf8Info extends ConstantPoolInfo {
 
     @Override
     public String toString() {
-        return String.format("Utf8Info: [%s=\"%s\"]", Arrays.toString(arr), new String(arr, StandardCharsets.UTF_8));
+//        return String.format("Utf8Info: [%s=\"%s\"]", Arrays.toString(arr), new String(arr, StandardCharsets.UTF_8));
+        return String.format("\"%s\"", new String(arr, StandardCharsets.UTF_8));
     }
 
     @Override

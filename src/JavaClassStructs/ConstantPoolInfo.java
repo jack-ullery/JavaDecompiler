@@ -1,4 +1,4 @@
-package JavaClassStructs;
+ package JavaClassStructs;
 
 import JavaClassStructs.ConstantPoolInfoStructs.ClassInfo;
 import JavaClassStructs.ConstantPoolInfoStructs.DoubleInfo;
@@ -29,8 +29,8 @@ import misc.StreamFunctions;
  */
 public abstract class ConstantPoolInfo {
 
-    private static final PrintStream debug1 = DebugStream.ON;
-    private static final PrintStream debug2 = DebugStream.ON;
+    private static final PrintStream debug1 = DebugStream.OFF;
+    private static final PrintStream debug2 = DebugStream.OFF;
 
     public static ConstantPoolInfo[] readArray(InputStream data, final short ucount) throws IOException {
         int count = Short.toUnsignedInt(ucount);
@@ -89,17 +89,13 @@ public abstract class ConstantPoolInfo {
         }
     }
 
-    /**
-     *  METHODS FOR SUBCLASSES
-     */
+    /* METHODS FOR SUBCLASSES */
     protected ConstantPoolInfo(InputStream data) throws IOException {
         // This constructor requires subclasses to have an InputStream.
     }
 
-    protected void checkBounds(ConstantPoolInfo[] arr, int index) {
-        if (index < 0 || index > arr.length) {
-            throw new IllegalArgumentException("Constant Pool Index out of bounds");
-        } else if (arr[index] == this) {
+    protected void checkRecursion(ConstantPoolInfo[] arr, int index) {
+        if (arr[index] == this) {
             throw new IllegalArgumentException("Unexpected recursive call for ConstantPool entry");
         }
     }

@@ -22,21 +22,21 @@ public class MethodInfo {
     final short descriptor_index;
     final AttributeInfo[] attributes;
 
-    public MethodInfo(InputStream data) throws IOException {
+    public MethodInfo(InputStream data, ConstantPoolInfo[] constant_pool) throws IOException {
         access_flags = StreamFunctions.readShort(data);
         name_index = StreamFunctions.readShort(data);
         descriptor_index = StreamFunctions.readShort(data);
         final short attributes_count = StreamFunctions.readShort(data);
-        attributes = AttributeInfo.readArray(data, attributes_count);
+        attributes = AttributeInfo.readArray(data, attributes_count, constant_pool);
     }
 
-    public static MethodInfo[] readArray(InputStream data, final short ucount) throws IOException {
+    public static MethodInfo[] readArray(InputStream data, final short ucount, ConstantPoolInfo[] constant_pool) throws IOException {
         int count = Short.toUnsignedInt(ucount);
         debug.println("Reading " + count + " MethodInfo classes.\n");
         MethodInfo[] arr = new MethodInfo[count];
         for (int i = 0; i < count; i++) {
             debug.println("Class " + i + ":");
-            arr[i] = new MethodInfo(data);
+            arr[i] = new MethodInfo(data, constant_pool);
             debug.println(arr[i]);
         }
         return arr;
@@ -46,10 +46,10 @@ public class MethodInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Access Flags: ").append(access_flags);
-        sb.append("\nName Index: ").append(name_index);
-        sb.append("\nDescriptor Index: ").append(descriptor_index);
-        sb.append("\nAttribute Count: ").append(attributes.length);
-        sb.append("\nAttributes: ").append(Arrays.toString(attributes)).append("\n");
+        sb.append("\n\tName Index: ").append(name_index);
+        sb.append("\n\tDescriptor Index: ").append(descriptor_index);
+        sb.append("\n\tAttribute Count: ").append(attributes.length);
+        sb.append("\n\tAttributes: ").append(Arrays.toString(attributes)).append("\n");
         return sb.toString();
     }
 }

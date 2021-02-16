@@ -31,9 +31,9 @@ public class FieldrefInfo extends ConstantPoolInfo {
 
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
-        checkBounds(arr, class_index);
+        checkRecursion(arr, class_index);
         child1 = (ClassInfo) arr[class_index];
-        checkBounds(arr, name_and_type_index);
+        checkRecursion(arr, name_and_type_index);
         child2 = (NameAndTypeInfo) arr[name_and_type_index];
     }
 }

@@ -30,7 +30,7 @@ public class InvokeDynamicInfo extends ConstantPoolInfo {
 
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
-        checkBounds(arr, name_and_type_index);
+        checkRecursion(arr, name_and_type_index);
         child = (NameAndTypeInfo) arr[name_and_type_index];
     }
 }

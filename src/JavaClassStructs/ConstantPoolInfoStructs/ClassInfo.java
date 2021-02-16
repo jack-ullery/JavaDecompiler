@@ -30,7 +30,7 @@ public class ClassInfo extends ConstantPoolInfo {
 
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
-        checkBounds(arr, name_index);
+        checkRecursion(arr, name_index);
         child = (Utf8Info) arr[name_index];
     }
 }

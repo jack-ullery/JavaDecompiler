@@ -28,7 +28,7 @@ public class MethodTypeInfo extends ConstantPoolInfo {
 
     @Override
     public void findChild(ConstantPoolInfo[] arr) {
-        checkBounds(arr, descriptor_index);
+        checkRecursion(arr, descriptor_index);
         child = (Utf8Info) arr[descriptor_index];
     }
 }
