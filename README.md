@@ -1,4 +1,4 @@
-# JavaDisassemble
+# JavaDisassembler
 
 An active attempt to disassemble the Java class file.
 Eventually this aims to mimic the javap program.
