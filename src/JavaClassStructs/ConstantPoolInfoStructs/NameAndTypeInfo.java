@@ -1,6 +1,6 @@
 package JavaClassStructs.ConstantPoolInfoStructs;
 
-import JavaClassStructs.ConstantPoolInfo;
+import JavaClassStructs.ConstantPoolItem;
 import java.io.IOException;
 import java.io.InputStream;
 import misc.StreamFunctions;
@@ -11,7 +11,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class NameAndTypeInfo extends ConstantPoolInfo {
+public class NameAndTypeInfo extends ConstantPoolItem {
 
     private Utf8Info child1;
     private Utf8Info child2;
@@ -30,7 +30,7 @@ public class NameAndTypeInfo extends ConstantPoolInfo {
     }
 
     @Override
-    public void findChild(ConstantPoolInfo[] arr) {
+    public void findChild(ConstantPoolItem[] arr) {
         checkRecursion(arr, name_index);
         child1 = (Utf8Info) arr[name_index];
         checkRecursion(arr, descriptor_index);

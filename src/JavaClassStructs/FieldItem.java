@@ -14,7 +14,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class FieldInfo {
+public class FieldItem {
 
     private static final PrintStream debug = DebugStream.ON;
     private static final PrintStream debug2 = DebugStream.ON;
@@ -22,9 +22,9 @@ public class FieldInfo {
     final short access_flags;
     final Utf8Info name;
     final Utf8Info descriptor;
-    final AttributeInfo[] attributes;
+    final AttributeItem[] attributes;
 
-    public FieldInfo(InputStream data, ConstantPoolInfo[] constant_pool) throws IOException {
+    public FieldItem(InputStream data, ConstantPoolItem[] constant_pool) throws IOException {
         access_flags = StreamFunctions.readShort(data);
         debug2.println("Access_Flags: "+access_flags);
         short name_index = StreamFunctions.readShortMinus(data);
@@ -34,16 +34,16 @@ public class FieldInfo {
         short descriptor_index = StreamFunctions.readShortMinus(data);
         descriptor = (Utf8Info) constant_pool[descriptor_index];
         final short attributes_count = StreamFunctions.readShort(data);
-        attributes = AttributeInfo.readArray(data, attributes_count, constant_pool);
+        attributes = AttributeItem.readArray(data, attributes_count, constant_pool);
     }
 
-    public static FieldInfo[] readArray(InputStream data, final short ucount, ConstantPoolInfo[] constant_pool) throws IOException {
+    public static FieldItem[] readArray(InputStream data, final short ucount, ConstantPoolItem[] constant_pool) throws IOException {
         int count = Short.toUnsignedInt(ucount);
         debug.println("Reading " + count + " FieldInfo classes.");
-        FieldInfo[] arr = new FieldInfo[count];
+        FieldItem[] arr = new FieldItem[count];
         for (int i = 0; i < count; i++) {
             debug.println("Field #" + i);
-            arr[i] = new FieldInfo(data, constant_pool);
+            arr[i] = new FieldItem(data, constant_pool);
             debug.println(arr[i]);
         }
         return arr;

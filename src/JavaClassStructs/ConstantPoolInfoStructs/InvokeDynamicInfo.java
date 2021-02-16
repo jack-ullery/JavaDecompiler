@@ -1,6 +1,6 @@
 package JavaClassStructs.ConstantPoolInfoStructs;
 
-import JavaClassStructs.ConstantPoolInfo;
+import JavaClassStructs.ConstantPoolItem;
 import java.io.IOException;
 import java.io.InputStream;
 import misc.StreamFunctions;
@@ -11,7 +11,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class InvokeDynamicInfo extends ConstantPoolInfo {
+public class InvokeDynamicInfo extends ConstantPoolItem {
 
     private NameAndTypeInfo child;
     private final short bootstrap_method_attr_index;
@@ -29,7 +29,7 @@ public class InvokeDynamicInfo extends ConstantPoolInfo {
     }
 
     @Override
-    public void findChild(ConstantPoolInfo[] arr) {
+    public void findChild(ConstantPoolItem[] arr) {
         checkRecursion(arr, name_and_type_index);
         child = (NameAndTypeInfo) arr[name_and_type_index];
     }

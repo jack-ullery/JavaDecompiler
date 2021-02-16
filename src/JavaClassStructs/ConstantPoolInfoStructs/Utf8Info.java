@@ -1,6 +1,6 @@
 package JavaClassStructs.ConstantPoolInfoStructs;
 
-import JavaClassStructs.ConstantPoolInfo;
+import JavaClassStructs.ConstantPoolItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -15,7 +15,7 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class Utf8Info extends ConstantPoolInfo {
+public class Utf8Info extends ConstantPoolItem {
 
     private static final PrintStream debug = DebugStream.OFF;
 
@@ -44,7 +44,7 @@ public class Utf8Info extends ConstantPoolInfo {
     }
 
     @Override
-    public void findChild(ConstantPoolInfo[] arr) {
+    public void findChild(ConstantPoolItem[] arr) {
         // Do nothing there are no children here
     }
 }

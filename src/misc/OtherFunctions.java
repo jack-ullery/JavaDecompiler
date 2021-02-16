@@ -1,6 +1,6 @@
 package misc;
 
-import JavaClassStructs.ConstantPoolInfo;
+import JavaClassStructs.ConstantPoolItem;
 
 /**
  *

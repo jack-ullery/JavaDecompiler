@@ -14,32 +14,32 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public class MethodInfo {
+public class MethodItem {
 
-    private static final PrintStream debug = DebugStream.OFF;
+    private static final PrintStream debug = DebugStream.ON;
 
     final short access_flags;
     final Utf8Info name;
     final Utf8Info descriptor;
-    final AttributeInfo[] attributes;
+    final AttributeItem[] attributes;
 
-    public MethodInfo(InputStream data, ConstantPoolInfo[] constant_pool) throws IOException {
+    public MethodItem(InputStream data, ConstantPoolItem[] constant_pool) throws IOException {
         access_flags = StreamFunctions.readShort(data);
         short name_index = StreamFunctions.readShortMinus(data);
         name = (Utf8Info) constant_pool[name_index];
         short descriptor_index = StreamFunctions.readShortMinus(data);
         descriptor = (Utf8Info) constant_pool[descriptor_index];
         final short attributes_count = StreamFunctions.readShort(data);
-        attributes = AttributeInfo.readArray(data, attributes_count, constant_pool);
+        attributes = AttributeItem.readArray(data, attributes_count, constant_pool);
     }
 
-    public static MethodInfo[] readArray(InputStream data, final short ucount, ConstantPoolInfo[] constant_pool) throws IOException {
+    public static MethodItem[] readArray(InputStream data, final short ucount, ConstantPoolItem[] constant_pool) throws IOException {
         int count = Short.toUnsignedInt(ucount);
         debug.println("Reading " + count + " MethodInfo classes.\n");
-        MethodInfo[] arr = new MethodInfo[count];
+        MethodItem[] arr = new MethodItem[count];
         for (int i = 0; i < count; i++) {
             debug.println("Class " + i + ":");
-            arr[i] = new MethodInfo(data, constant_pool);
+            arr[i] = new MethodItem(data, constant_pool);
             debug.println(arr[i]);
         }
         return arr;
@@ -49,8 +49,8 @@ public class MethodInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Access Flags: ").append(access_flags);
-//        sb.append("\n\tName Index: ").append(name_index);
-//        sb.append("\n\tDescriptor Index: ").append(descriptor_index);
+        sb.append("\n\tName: ").append(name);
+        sb.append("\n\tDescriptor: ").append(descriptor);
         sb.append("\n\tAttribute Count: ").append(attributes.length);
         sb.append("\n\tAttributes: ").append(Arrays.toString(attributes)).append("\n");
         return sb.toString();

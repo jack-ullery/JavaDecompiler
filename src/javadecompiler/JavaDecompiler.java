@@ -1,9 +1,9 @@
 package javadecompiler;
 
-import JavaClassStructs.AttributeInfo;
-import JavaClassStructs.ConstantPoolInfo;
-import JavaClassStructs.FieldInfo;
-import JavaClassStructs.MethodInfo;
+import JavaClassStructs.AttributeItem;
+import JavaClassStructs.ConstantPoolItem;
+import JavaClassStructs.FieldItem;
+import JavaClassStructs.MethodItem;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -19,14 +19,14 @@ public class JavaDecompiler {
     private final FileInputStream file;
     private final short majorNumber;
     private final short minorNumber;
-    private final ConstantPoolInfo[] pool;
+    private final ConstantPoolItem[] pool;
     private final short accessFlags;
     private final short classIndex;
     private final short superIndex;
     private final byte[] interfaces;
-    private final FieldInfo[] fields;
-    private final MethodInfo[] methods;
-    private final AttributeInfo[] attributes;
+    private final FieldItem[] fields;
+    private final MethodItem[] methods;
+    private final AttributeItem[] attributes;
 
     public JavaDecompiler(String filename) throws IOException {
         file = StreamFunctions.getStream(filename);
@@ -38,7 +38,7 @@ public class JavaDecompiler {
         majorNumber = StreamFunctions.readShort(file);
         short poolSize = StreamFunctions.readShortMinus(file);
         debug.println("Pool Size: " + Short.toUnsignedInt(poolSize));
-        pool = ConstantPoolInfo.readArray(file, poolSize);
+        pool = ConstantPoolItem.readArray(file, poolSize);
         accessFlags = StreamFunctions.readShort(file);
         debug.println("Access Flags: " + accessFlags);
         classIndex = StreamFunctions.readShort(file);
@@ -50,13 +50,13 @@ public class JavaDecompiler {
         interfaces = readNBytes(interfaceCount);
         short fieldsCount = StreamFunctions.readShort(file);
         debug.println("Fields Count: " + fieldsCount);
-        fields = FieldInfo.readArray(file, fieldsCount, pool);
+        fields = FieldItem.readArray(file, fieldsCount, pool);
         short methodsCount = StreamFunctions.readShort(file);
         debug.println("Methods Count: " + methodsCount);
-        methods = MethodInfo.readArray(file, methodsCount, pool);
+        methods = MethodItem.readArray(file, methodsCount, pool);
         short attributesCount = StreamFunctions.readShort(file);
         debug.println("Attributes Count: " + methodsCount);
-        attributes = AttributeInfo.readArray(file, attributesCount, pool);
+        attributes = AttributeItem.readArray(file, attributesCount, pool);
     }
 
     private boolean parseMagicNumber() throws IOException {

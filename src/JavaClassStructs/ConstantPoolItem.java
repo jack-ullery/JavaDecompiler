@@ -14,7 +14,7 @@ import JavaClassStructs.ConstantPoolInfoStructs.MethodrefInfo;
 import JavaClassStructs.ConstantPoolInfoStructs.NameAndTypeInfo;
 import JavaClassStructs.ConstantPoolInfoStructs.StringInfo;
 import JavaClassStructs.ConstantPoolInfoStructs.Utf8Info;
-import JavaClassStructs.ConstantPoolInfo;
+import JavaClassStructs.ConstantPoolItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -27,14 +27,14 @@ import misc.StreamFunctions;
  *
  * @author Jack Ullery
  */
-public abstract class ConstantPoolInfo {
+public abstract class ConstantPoolItem {
 
     private static final PrintStream debug1 = DebugStream.OFF;
     private static final PrintStream debug2 = DebugStream.OFF;
 
-    public static ConstantPoolInfo[] readArray(InputStream data, final short ucount) throws IOException {
+    public static ConstantPoolItem[] readArray(InputStream data, final short ucount) throws IOException {
         int count = Short.toUnsignedInt(ucount);
-        ConstantPoolInfo[] arr = new ConstantPoolInfo[count];
+        ConstantPoolItem[] arr = new ConstantPoolItem[count];
         for (int i = 0; i < count; i++) {
             debug1.println("1 - Constant #" + i);
             arr[i] = create(data);
@@ -53,7 +53,7 @@ public abstract class ConstantPoolInfo {
     }
 
     // Builds an element of this class from the InputStream.
-    public static ConstantPoolInfo create(InputStream data) throws IOException {
+    public static ConstantPoolItem create(InputStream data) throws IOException {
         byte tag = StreamFunctions.readByte(data);
         switch (tag) {
             case 1:
@@ -90,11 +90,11 @@ public abstract class ConstantPoolInfo {
     }
 
     /* METHODS FOR SUBCLASSES */
-    protected ConstantPoolInfo(InputStream data) throws IOException {
+    protected ConstantPoolItem(InputStream data) throws IOException {
         // This constructor requires subclasses to have an InputStream.
     }
 
-    protected void checkRecursion(ConstantPoolInfo[] arr, int index) {
+    protected void checkRecursion(ConstantPoolItem[] arr, int index) {
         if (arr[index] == this) {
             throw new IllegalArgumentException("Unexpected recursive call for ConstantPool entry");
         }
@@ -105,10 +105,10 @@ public abstract class ConstantPoolInfo {
      *
      * @param arr The array that contains this ConstantInfoStruct and its
      * children.
-     * @throws ClassCastException when an incorrect ConstantPoolInfo type is
-     * pointed to.
+     * @throws ClassCastException when an incorrect ConstantPoolItem type is
+ pointed to.
      */
-    public abstract void findChild(ConstantPoolInfo[] arr);
+    public abstract void findChild(ConstantPoolItem[] arr);
 
     @Override
     public abstract String toString();
